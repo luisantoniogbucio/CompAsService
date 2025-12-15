@@ -9,8 +9,8 @@
 ---
 ## 📹 Video 
 
-Mira este video para entender mejor el tema:
-[Tutorial Completo - Compilador de Expresiones]([link](https://youtu.be/Ff0w2YrrT7k))
+Mira este video para entender cómo funciona el compilador:
+[Tutorial Completo - Compilador de Expresiones](https://www.youtube.com/watch?v=Ff0w2YrrT7k)
 
 ---
 
