@@ -19,7 +19,11 @@ public class MetricasCompilacion {
     private final Map<String, AtomicLong> lenguajesUtilizados;
     private final AtomicLong totalTokensProcesados;
     private final AtomicLong erroresSintacticos;
-    
+
+    /**
+     * Constructor que inicializa todas las métricas en cero.
+     * Registra el timestamp de inicio para cálculos de tiempo activo.
+     */
     public MetricasCompilacion() {
         this.tiempoInicioMs = System.currentTimeMillis();
         this.totalRequests = new AtomicLong(0);
@@ -30,7 +34,15 @@ public class MetricasCompilacion {
         this.totalTokensProcesados = new AtomicLong(0);
         this.erroresSintacticos = new AtomicLong(0);
     }
-    
+
+    /**
+     * Registra una compilación exitosa en el sistema de métricas.
+     * Incrementa contadores de éxito, tokens procesados y uso de lenguaje.
+     * 
+     * @param lenguaje nombre del lenguaje utilizado para la compilación
+     * @param tokens cantidad de tokens procesados en la expresión
+     * @param latenciaMs tiempo en milisegundos que tomó la compilación
+     */
     public void registrarCompilacionExitosa(String lenguaje, int tokens, long latenciaMs) {
         totalRequests.incrementAndGet();
         requestsExitosos.incrementAndGet();
@@ -41,7 +53,14 @@ public class MetricasCompilacion {
             .computeIfAbsent(lenguaje, k -> new AtomicLong(0))
             .incrementAndGet();
     }
-    
+
+    /**
+     * Registra una compilación fallida en el sistema de métricas.
+     * Incrementa contadores de error y uso de lenguaje.
+     * 
+     * @param lenguaje nombre del lenguaje donde ocurrió el error
+     * @param latenciaMs tiempo en milisegundos que tomó hasta el fallo
+     */
     public void registrarCompilacionFallida(String lenguaje, long latenciaMs) {
         totalRequests.incrementAndGet();
         requestsFallidos.incrementAndGet();
@@ -52,7 +71,13 @@ public class MetricasCompilacion {
             .computeIfAbsent(lenguaje, k -> new AtomicLong(0))
             .incrementAndGet();
     }
-    
+
+    /**
+     * Genera un snapshot inmutable de todas las métricas actuales.
+     * Calcula métricas derivadas como latencia promedio, throughput y tasa de error.
+     * 
+     * @return objeto ResultadoMetricas con todos los valores calculados
+     */
     public ResultadoMetricas generarSnapshot() {
         ResultadoMetricas resultado = new ResultadoMetricas();
         
