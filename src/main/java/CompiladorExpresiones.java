@@ -2,11 +2,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Compilador simple de expresiones aritméticas.
- * Gramática:
+ * 
+ * <p>Este compilador implementa un analizador léxico y sintáctico para evaluar
+ * expresiones aritméticas con los operadores básicos (+, -, *, /) y paréntesis.</p>
+ * 
+ * <p>Gramática soportada:</p>
+ * <pre>
  *   Expr   ::= Term (('+' | '-') Term)*
  *   Term   ::= Factor (('*' | '/') Factor)*
  *   Factor ::= Numero | '(' Expr ')'
+ * </pre>
+ * 
  */
 public class CompiladorExpresiones {
     
@@ -14,7 +20,15 @@ public class CompiladorExpresiones {
     private int posicionActual;
     private List<Token> tokens;
     private int indiceParseo;
-    
+
+     /**
+     * Compila y evalúa una expresión aritmética.
+     * 
+     * @param expresion la cadena que contiene la expresión aritmética a evaluar
+     * @return el resultado numérico de evaluar la expresión
+     * @throws Exception si la expresión es inválida, está mal formada
+     *                   
+     */
     public double compilar(String expresion) throws Exception {
         this.entrada = expresion;
         this.posicionActual = 0;
@@ -30,7 +44,14 @@ public class CompiladorExpresiones {
         
         return resultado;
     }
-    
+
+      /**
+     * Realiza el análisis léxico de la expresión de entrada.
+     * 
+     * Este método recorre la cadena de entrada carácter por carácter,
+     * identificando y clasificando los tokens: números, operadores, paréntesis.
+     * @throws Exception si se encuentra un carácter no reconocido en la entrada
+     */
     private void analizarLexico() throws Exception {
         while (posicionActual < entrada.length()) {
             char c = entrada.charAt(posicionActual);
@@ -72,7 +93,15 @@ public class CompiladorExpresiones {
         
         tokens.add(new Token(Token.Tipo.FIN, "", posicionActual));
     }
-    
+
+    /**
+     * Parsea y evalúa una expresión aritmética completa.
+     * 
+     * <p>Implementa la regla gramatical: Expr ::= Term (('+' | '-') Term)*</p>
+     * @return el resultado numérico de evaluar la expresión
+     * @throws Exception si la expresión está mal formada o incompleta
+     * 
+     */
     private double parsearExpresion() throws Exception {
         double resultado = parsearTermino();
         
@@ -100,7 +129,16 @@ public class CompiladorExpresiones {
         
         return resultado;
     }
-    
+
+    /**
+     * Parsea y evalúa un término aritmético.
+     * 
+     * <p>Implementa la regla gramatical: Term ::= Factor (('*' | '/') Factor)*</p>
+     * 
+     * @return el resultado numérico de evaluar el término
+     * @throws Exception si el término está mal formado, incompleto, 
+     *                   o si se intenta realizar una división por cero
+     */
     private double parsearTermino() throws Exception {
         double resultado = parsearFactor();
         
@@ -131,7 +169,17 @@ public class CompiladorExpresiones {
         
         return resultado;
     }
-    
+
+    /**
+     * Parsea y evalúa un factor aritmético.
+     * 
+     * Implementa la regla gramatical: Factor ::= Numero | '(' Expr ')'
+     * 
+     * @return el resultado numérico de evaluar el factor
+     * @throws Exception si el factor está mal formado, si se encuentra un token inesperado,
+     *                   si hay paréntesis sin cerrar, o si el número no es válido
+     *
+     */
     private double parsearFactor() throws Exception {
         if (indiceParseo >= tokens.size()) {
             throw new Exception("Expresión incompleta");
@@ -163,7 +211,13 @@ public class CompiladorExpresiones {
         
         throw new Exception("Factor esperado en posición " + token.getPosicion());
     }
-    
+
+    /**
+     * Obtiene la lista de tokens generados durante el análisis léxico.
+     * 
+     * @return lista inmutable de tokens identificados en la expresión
+     * 
+     */
     public List<Token> getTokens() {
         return tokens;
     }
