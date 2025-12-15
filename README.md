@@ -7,6 +7,12 @@
 - Morales Martínez Edgar Jesús
 
 ---
+## 📹 Video 
+
+Mira este video para entender mejor el tema:
+[Tutorial Completo - Compilador de Expresiones](link)
+
+---
 
 ## Inicio 
 
