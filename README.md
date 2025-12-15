@@ -9,8 +9,8 @@
 ---
 ## 📹 Video 
 
-Mira este video para entender cómo funciona el compilador:
-[Tutorial Completo - Compilador de Expresiones](https://www.youtube.com/watch?v=Ff0w2YrrT7k)
+Mira este video para entender cómo funciona el Servicio:
+[Compiler as a Service](https://www.youtube.com/watch?v=Ff0w2YrrT7k)
 
 ---
 
